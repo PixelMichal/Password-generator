@@ -1,6 +1,6 @@
 # 🔐 Random Password Generator
 
-https://github.com/PixelMichal/Password-generator
+https://pixelmichal.github.io/Password-generator/
 
 A simple web application that generates secure random passwords based on user preferences. Built with HTML, CSS, JavaScript and Bootstrap.
 
