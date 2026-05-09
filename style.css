@@ -1,0 +1,96 @@
+:root {
+  --color-green: #008b53;
+  --color-white: #ded3d3;
+  --color-red: #e90f0fa7;
+  --color-orange: #c4840d;
+  --color-darkBlue: #00203a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-darkBlue);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.ins h1:first-child {
+  color: var(--color-white);
+}
+
+.ins h1:nth-child(2) {
+  color: var(--color-orange);
+  line-height: 60px;
+  display: inline-block;
+}
+
+.ins h1 {
+  margin: 5px 0 5px;
+}
+
+.input {
+  margin: 30px 0 20px;
+}
+
+.input input {
+  width: 350px;
+  height: 70px;
+  border-radius: 8px;
+  padding-left: 20px;
+  font-size: 1.3em;
+}
+
+.characters {
+  color: var(--color-white);
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+}
+
+.contains {
+  color: var(--color-white);
+}
+
+.buttons button {
+  height: 60px;
+  color: var(--color-white);
+  font-size: 0.9em;
+  border-color: #e5dbdb8d;
+  border-radius: 6px;
+}
+
+.button-generator button {
+  width: 200px;
+  background-color: var(--color-green);
+}
+
+.button-copy button {
+  width: 100px;
+  background-color: var(--color-red);
+}
+
+.buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.alert {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 10px;
+  transform: translate(-50%, 0);
+  background-color: var(--color-green);
+  padding: 15px;
+  color: var(--color-white);
+  border-radius: 8px;
+}
