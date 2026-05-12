@@ -15,68 +15,48 @@ buttonCopy.addEventListener("click", (e) => {
 });
 
 function generatePassword() {
-  const upper = document.querySelector("#check1").checked;
-  const upperChar = "QWERTYUIOPASDFGHJKLZXCVBNM";
-  const numbers = document.querySelector("#check2").checked;
-  const numbersChar = "1234567890";
-  const special = document.querySelector("#check3").checked;
-  const specialChar = "!@#$%^&*()";
-
   const lengthPass = lengthOfPassword();
-  const allChar =
-    "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*()";
+  const allSmallChar = "qwertyuiopasdfghjklzxcvbnm";
+  const selectedCharGroups = [];
+
+  if (document.querySelector("#check1").checked) {
+    selectedCharGroups.push("QWERTYUIOPASDFGHJKLZXCVBNM");
+  }
+
+  if (document.querySelector("#check2").checked) {
+    selectedCharGroups.push("1234567890");
+  }
+
+  if (document.querySelector("#check3").checked) {
+    selectedCharGroups.push("!@#$%^&*()");
+  }
+
   let arr = [];
+
   for (let i = 0; i < lengthPass; i++) {
-    let randChar = Math.floor(Math.random() * allChar.length);
-    arr[i] = allChar[randChar];
+    let randChar =
+      crypto.getRandomValues(new Uint32Array(1))[0] % allSmallChar.length;
+    arr[i] = allSmallChar[randChar];
   }
-  if (upper && !numbers && !special) {
-    let rand = Math.floor(Math.random() * lengthPass);
-    arr[rand] = upperChar[Math.floor(Math.random() * upperChar.length)];
-  } else if (!upper && numbers && !special) {
-    let rand = Math.floor(Math.random() * lengthPass);
-    arr[rand] = numbersChar[Math.floor(Math.random() * numbersChar.length)];
-  } else if (!upper && !numbers && special) {
-    let rand = Math.floor(Math.random() * lengthPass);
-    arr[rand] = specialChar[Math.floor(Math.random() * specialChar.length)];
-  } else if (upper && numbers && !special) {
-    let rand = Math.floor(Math.random() * lengthPass);
-    arr[rand] = upperChar[Math.floor(Math.random() * upperChar.length)];
-    let rand2 = Math.floor(Math.random() * lengthPass);
-    while (rand2 == rand) {
-      rand2 = Math.floor(Math.random() * lengthPass);
+
+  let usedIndexes = [];
+
+  selectedCharGroups.forEach((charGroup) => {
+    let passwordIndex =
+      crypto.getRandomValues(new Uint32Array(1))[0] % lengthPass;
+
+    while (usedIndexes.includes(passwordIndex)) {
+      passwordIndex =
+        crypto.getRandomValues(new Uint32Array(1))[0] % lengthPass;
     }
-    arr[rand2] = numbersChar[Math.floor(Math.random() * numbersChar.length)];
-  } else if (upper && !numbers && special) {
-    let rand = Math.floor(Math.random() * lengthPass);
-    arr[rand] = upperChar[Math.floor(Math.random() * upperChar.length)];
-    let rand2 = Math.floor(Math.random() * lengthPass);
-    while (rand2 == rand) {
-      rand2 = Math.floor(Math.random() * lengthPass);
-    }
-    arr[rand2] = specialChar[Math.floor(Math.random() * specialChar.length)];
-  } else if (!upper && numbers && special) {
-    let rand = Math.floor(Math.random() * lengthPass);
-    arr[rand] = numbersChar[Math.floor(Math.random() * numbersChar.length)];
-    let rand2 = Math.floor(Math.random() * lengthPass);
-    while (rand2 == rand) {
-      rand2 = Math.floor(Math.random() * lengthPass);
-    }
-    arr[rand2] = specialChar[Math.floor(Math.random() * specialChar.length)];
-  } else if (upper && numbers && special) {
-    let rand = Math.floor(Math.random() * lengthPass);
-    arr[rand] = upperChar[Math.floor(Math.random() * upperChar.length)];
-    let rand2 = Math.floor(Math.random() * lengthPass);
-    while (rand2 == rand) {
-      rand2 = Math.floor(Math.random() * lengthPass);
-    }
-    arr[rand2] = numbersChar[Math.floor(Math.random() * numbersChar.length)];
-    let rand3 = Math.floor(Math.random() * lengthPass);
-    while (rand3 == rand || rand3 == rand2) {
-      rand3 = Math.floor(Math.random() * lengthPass);
-    }
-    arr[rand3] = specialChar[Math.floor(Math.random() * specialChar.length)];
-  }
+
+    const charIndex =
+      crypto.getRandomValues(new Uint32Array(1))[0] % charGroup.length;
+
+    arr[passwordIndex] = charGroup[charIndex];
+    usedIndexes.push(passwordIndex);
+  });
+
   return arr.join("");
 }
 
@@ -86,6 +66,7 @@ function lengthOfPassword() {
 }
 
 function copyPassword() {
+  if (input.value === "") return;
   navigator.clipboard.writeText(input.value);
 }
 
